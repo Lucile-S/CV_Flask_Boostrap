@@ -1,0 +1,139 @@
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('static', filename='css/styles-4.css')}}">
+<!--link rel="stylesheet" href="{{url_for('static', filename='plugins/fontawesome/css/fontawesome.css')}}"-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/v4-shims.css">
+
+{% endblock %}
+
+{% block title %}
+    {{ config.data.site_title}}
+{% endblock %}
+
+{% block body %}
+    <div class="wrapper">
+        <div class="sidebar-wrapper">
+            <div class="profile-container">
+                <img class="img-responsive" src="{{url_for('static', filename='images/profile.jpg')}}" alt="" />
+                <h1 class="name"> {{ config.data.name }} </h1>
+                <h2 class="tagline">{{ config.data.tagline }}</h2>
+            </div><!--//profile-container-->
+            <div class="contact-container container-block">
+                <ul class="list-unstyled contact-list">
+                    <li class="email"><i class="fas fa-envelope"></i><a href="mailto:{{ config.data.email }}">{{ config.data.email }}</a></li>
+                    <li class="phone"><i class="fas fa-phone"></i>{{ config.data.phone }}</li>
+                    <li class="linkedin"><i class="fab fa-linkedin"></i><a href="https://{{ config.data.linkedin }}" target="_blank">{{ config.data.linkedin }}</a></li>
+                    <li class="github"><i class="fab fa-github"></i><a href="https://{{ config.data.github }}" target="_blank">{{ config.data.github}}</a></li>
+                    <li class="twitter"><i class="fab fa-kaggle"></i><a href="https://twitter.com/{{ config.data.twitter }}" target="_blank">{{ config.data.twitter }}</a></li>
+                    <li class="researchgate"><i class="fab fa-researchgate"></i><a href={{ config.data.researchgate }} target="_blank">{{ config.data.researchgate }}</a></li-->
+                </ul>
+            </div><!--//contact-container-->
+            <div class="education-container container-block">
+                <h2 class="container-block-title">Formation</h2>
+                {% for ed in config.data.education %}
+                <div class="item">
+                    <h4 class="degree">{{ed[0]}}</h4>
+                    <h5 class="meta">{{ed[1]}}</h5>
+                    <div class="time">{{ed[2]}}</div>
+                </div><!--//item-->
+                {% endfor %}
+            </div><!--//education-container-->
+            <div class="languages-container container-block">
+                <h2 class="container-block-title">Langues</h2>
+                <ul class="list-unstyled interests-list">
+                    {% for lang in config.data.languages %}
+                    <li>{{lang[0]}}<span class="lang-desc">{{lang[1]}}</span></li>
+                    {% endfor %}
+                </ul>
+            </div><!--//interests-->
+            <div class="interests-container container-block">
+                <h2 class="container-block-title">Centres d'intérêt</h2>
+                <ul class="list-unstyled interests-list">
+                    {% for interest in config.data.interests %}
+                    <li>{{interest}}</li>
+                    {% endfor %}
+                </ul>
+            </div><!--//interests-->
+            
+        </div><!--//sidebar-wrapper-->
+        
+        <div class="main-wrapper">
+            
+            <section class="section summary-section">
+                <h2 class="section-title"><i class="fa fa-user"></i>A propos de moi</h2>
+                <div class="summary">
+                    {% autoescape false %}
+                    {{ config.data.summary }}
+                    {% endautoescape %}
+                </div><!--//summary-->
+            </section><!--//section-->
+            
+            <section class="section experiences-section">
+                <h2 class="section-title"><i class="fa fa-briefcase"></i>Expériences</h2>
+                
+                {% for job in config.data.experience %}
+                <div class="item">
+                    <div class="meta">
+                        <div class="upper-row">
+                            <h3 class="job-title">{{job[0]}}</h3>
+                            <div class="time">{{job[1]}}</div>
+                        </div><!--//upper-row-->
+                        <div class="company">{{job[2]}}</div>
+                    </div><!--//meta-->
+                    <div class="details">
+                        {% autoescape false %}
+                        {{job[3]}}  
+                        {% endautoescape %}
+                    </div><!--//details-->
+                </div><!--//item-->
+                {% endfor %}
+                
+                
+            </section><!--//section-->
+            
+            <section class="section skills-section">
+                <h2 class="section-title"><i class="fa fa-rocket"></i>Compétences</h2>
+
+                {% for skill in config.data.skills %}
+                <div class="item">
+                    <span class="skill-title"><a href="{{skill[2]}}" target="_blank">{{skill[0]}}</a></span> - 
+                    <span class="skill-tagline">{{skill[1]}}</span>
+                </div><!--//item-->
+                {% endfor %}
+           
+            </section><!--//section-->
+
+            <section class="moocs-section section">
+                <h2 class="section-title"><i class="fa fa-desktop"></i>Mooc</h2>
+                {% for mooc in config.data.moocs %}
+                <div class="item">
+                    <span class="skill-title"><a href="{{mooc[2]}}" target="_blank">{{mooc[0]}}</a></span>                               
+                </div><!--//item-->
+                {% endfor %}
+                    
+            </section><!--//skills-section-->
+            
+        </div><!--//main-body-->
+    </div>
+<footer class="footer">
+        <div class="text-center">
+                <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can check out other license options via our website: themes.3rdwavemedia.com */-->
+                <small class="copyright">Designed with <i class="fa fa-heart"></i> by <a href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+        </div><!--//container-->
+    </footer>
+
+{% block scripts %}
+<script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+<script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+<script src="{{url_for('static', filename='js/main.js')}}"></script>
+{%- endblock scripts %}
+    
+{% endblock body %}
